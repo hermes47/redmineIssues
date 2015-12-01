@@ -13,7 +13,7 @@ def bug_subject(bot, trigger):
         except Exception as ex:
             bot.say(ex)
         else:
-        	bot.say(rm.url + "/issues/" + match)
+            bot.say(rm.url + "/issues/" + match)
 
 @module.commands(r"seturl")
 def set_url(bot, trigger):
