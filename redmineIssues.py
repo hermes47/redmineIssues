@@ -46,3 +46,19 @@ def get_build(bot, trigger):
     bot.rm.url = bot.rmdb.get_channel_value(trigger.sender,"url")
     project = bot.rm.project.get(bot.rmdb.get_channel_value(trigger.sender,"project"))
     bot.reply(project.versions[len(project.versions)-3])
+
+@module.interval(20)
+def check_new_build(bot):
+    for channel in bot.channels:
+        bot.rm.key = bot.rmdb.get_channel_value(channel,"apikey")
+        bot.rm.url = bot.rmdb.get_channel_value(channel,"url")
+        try:
+            project = bot.rm.project.get(bot.rmdb.get_channel_value(channel,"project"))
+        except:
+            project = None
+        if project is not None:
+            latestBuild = project.versions[len(project.versions)-3]
+            lastBuild = bot.rmdb.get_channel_value(channel,"lastbuild")
+            if lastBuild.__str__() != latestBuild.__str__():
+                bot.notice("A new build has been triggered! New Build is " + latestBuild.__str__(),channel)
+                bot.rmdb.set_channel_value(channel,"lastbuild",latestBuild.__str__())
