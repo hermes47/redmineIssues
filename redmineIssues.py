@@ -20,7 +20,7 @@ def bug_subject(bot, trigger):
             bot.say(ex)
         else:
             bot.say(issue.subject)
-            bot.say(bot.rm.url + "/issues/" + match)
+            bot.say(bot.rm.url + "issues/" + match)
 
 @module.commands(r"seturl")
 def set_url(bot, trigger):
